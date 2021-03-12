@@ -1,7 +1,7 @@
 {
-   "name": "LoadPokemons",
+   "name": "pokemon-challenge",
    "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "description": "REST API to retrieve Pokemons",
    "devDependencies": {
       "@types/node": "^8.0.29",
       "ts-node": "3.3.0",

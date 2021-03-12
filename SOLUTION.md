@@ -1,5 +1,5 @@
 # Challenges Coding Exercise Backend [SOLUTION]
-I've used loobackJS 4 and MongoDB as tools for developing the solution
+I've used NestJS and MongoDB as tools for developing the solution
 
 ### Pre-flight checks
 
@@ -16,6 +16,6 @@ Steps to run this project:
 1. Run `npm i` command
 2. Run `docker-compose up` command
 3. Run `npm run load-database` command
-4. Run `npm start` command (TBD) 
+4. Run `npm run start` command (TBD) 
 
 

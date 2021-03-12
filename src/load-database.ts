@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import {createConnection, getRepository} from "typeorm";
 import {Pokemon} from "./entity/Pokemon";
 import {PokemonType} from "./entity/PokemonType";
 import pokemonsToLoad from '../pokemons.json'
@@ -7,8 +7,6 @@ import pokemonsToLoad from '../pokemons.json'
 createConnection().then(async connection => {
 
     console.log("Importing Pokemons from json file...");
-
-    // console.log(pokemonsToLoad);
 
     for(let pokemon of pokemonsToLoad){
         const thePokemon = new Pokemon();
@@ -29,7 +27,9 @@ createConnection().then(async connection => {
         try {
             await connection.manager.save(thePokemon);
         } catch(e) {
-            console.log("Error inserting pokemon: ", e);
+            if(e.code !== 11000) { // Ignore duplicate key error
+                console.log("Error inserting type: ", e);
+            }
         }
         
         for(let type of thePokemon.types){
@@ -37,31 +37,32 @@ createConnection().then(async connection => {
             theType.name = type;
 
             try {
+                // const existingType = await getRepository(PokemonType).find({ where: { name: theType.name } });
                 await connection.manager.save(theType);
             } catch(e) {
-                console.log("Error inserting type: ", e);
+                if(e.code !== 11000) { // Ignore duplicate key error
+                    console.log("Error inserting type: ", e);
+                }
             }
         }
         
      }
 
-    console.log("Loading pokemons from the database...");
     try {
         const pokemonsFromDB = await connection.manager.find(Pokemon);
-        console.log("Loaded pokemons: ", pokemonsFromDB);
+        console.log(`Loaded ${pokemonsFromDB.length} pokemons`);
     } catch(e) {
         console.log("Error reading pokemons: ", e);
     }
 
-    console.log("Loading pokemon types from the database...");
     try {
         const pokemonTypesFromDB = await connection.manager.find(PokemonType);
-        console.log("Loaded pokemon types: ", pokemonTypesFromDB);
+        console.log(`Loaded ${pokemonTypesFromDB.length} pokemon types`);
     } catch(e) {
         console.log("Error reading pokemon types: ", e);
     }
 
     console.log("Load finished");
 
-    return;
+    return process.exit(0);
 }).catch(error => console.log(error));

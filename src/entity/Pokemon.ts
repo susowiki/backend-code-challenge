@@ -6,7 +6,7 @@ export class Pokemon {
     @ObjectIdColumn()
     _id: ObjectID;
 
-    @Column()
+    @Column({unique: true})
     id: string;
 
     @Column()
