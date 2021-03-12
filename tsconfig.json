@@ -4,14 +4,19 @@
          "es5",
          "es6"
       ],
-      "target": "es5",
+      "target": "es2017",
       "module": "commonjs",
       "moduleResolution": "node",
-      "outDir": "./build",
+      "outDir": "./dist",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
       "resolveJsonModule": true,
-      "esModuleInterop": true 
+      "esModuleInterop": true,
+      "declaration": true,
+      "removeComments": true,
+      "allowSyntheticDefaultImports": true,
+      "baseUrl": "./",
+      "incremental": true
    }
 }

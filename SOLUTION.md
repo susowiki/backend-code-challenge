@@ -16,6 +16,8 @@ Steps to run this project:
 1. Run `npm i` command
 2. Run `docker-compose up` command
 3. Run `npm run load-database` command
-4. Run `npm run start` command (TBD) 
+4. Run `npm run start` command
+5. Run `npm run test` command
+6. Run `npm run test:e2e` command
 
 
