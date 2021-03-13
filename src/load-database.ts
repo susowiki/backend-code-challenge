@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection, getRepository} from "typeorm";
+import {createConnection} from "typeorm";
 import {Pokemon} from "./entity/Pokemon";
 import {PokemonType} from "./entity/PokemonType";
 import pokemonsToLoad from '../pokemons.json'
@@ -23,6 +23,7 @@ createConnection().then(async connection => {
         thePokemon.maxCP = pokemon.maxCP;
         thePokemon.maxHP = pokemon.maxHP;
         thePokemon.attacks = pokemon.attacks;
+        thePokemon.favorite = false;
 
         try {
             await connection.manager.save(thePokemon);
@@ -37,7 +38,6 @@ createConnection().then(async connection => {
             theType.name = type;
 
             try {
-                // const existingType = await getRepository(PokemonType).find({ where: { name: theType.name } });
                 await connection.manager.save(theType);
             } catch(e) {
                 if(e.code !== 11000) { // Ignore duplicate key error

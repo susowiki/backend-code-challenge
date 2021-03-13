@@ -48,4 +48,6 @@ export class Pokemon {
     @Column("json")
     attacks: { fast: { "name": string, "type": string, "damage": number}[], special: { "name": string, "type": string, "damage": number}[] };
 
+    @Column()
+    favorite: boolean;
 }
