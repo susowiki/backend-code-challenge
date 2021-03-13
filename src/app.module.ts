@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { Pokemon } from './entity/Pokemon';
-import { PokemonType } from './entity/PokemonType';
+import { Pokemon } from './pokemon/pokemon.entity';
+import { PokemonType } from './pokemon/pokemon-type.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({

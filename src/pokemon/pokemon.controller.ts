@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Put, Query } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
-import { Pokemon } from '../entity/Pokemon';
-import { PokemonType } from '../entity/PokemonType';
+import { Pokemon } from './pokemon.entity';
+import { PokemonType } from './pokemon-type.entity';
 import { ListPokemonDto } from './pokemon-list.dto';
 
 @Controller('pokemon')

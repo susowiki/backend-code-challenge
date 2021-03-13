@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Pokemon } from '../entity/Pokemon';
-import { PokemonType } from '../entity/PokemonType';
+import { Pokemon } from './pokemon.entity';
+import { PokemonType } from './pokemon-type.entity';
 import { ListPokemonDto } from './pokemon-list.dto';
 
 @Injectable()
