@@ -19,6 +19,16 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Hello World!');
+      .expect('Status: UP');
+  });
+
+  it('/pokemon (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/pokemon')
+      .expect(200);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });

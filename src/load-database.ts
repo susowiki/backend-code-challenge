@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {Pokemon} from "./pokemon/pokemon.entity";
 import {PokemonType} from "./pokemon/pokemon-type.entity";
-import pokemonsToLoad from '../pokemons.json'
+import * as pokemonsToLoad from '../pokemons.json'
 
 createConnection().then(async connection => {
 
