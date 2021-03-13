@@ -38,11 +38,8 @@ export class PokemonService {
         return this.pokemonTypesRepository.find();
     }
 
-    updateFavorite(id: string, isFavorite: boolean): Promise<string> {
-        return this.pokemonsRepository.findOne({ where: { id: id } }).then(pokemon => {
-            pokemon.favorite = isFavorite;
-            this.pokemonsRepository.save(pokemon);
-            return 'OK';
-        });
+    updateFavorite(pokemon: Pokemon, isFavorite: boolean): Promise<Pokemon> {
+        pokemon.favorite = isFavorite;
+        return this.pokemonsRepository.save(pokemon);
     }
 }

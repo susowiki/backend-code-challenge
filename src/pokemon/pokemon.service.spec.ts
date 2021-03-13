@@ -95,19 +95,16 @@ describe('PokemonService', () => {
     expect(pokemonTypesRepositoryFindSpy).toBeCalledTimes(1); 
   });
 
-  it('test mark as favorite', async () => {
-    const mockResult = new Pokemon();
-    mockResult.id = '001';
-    mockResult.name = 'Bulbasaur';
-    const pokemonsRepositoryFindOneSpy = jest
-      .spyOn(pokemonsRepository, 'findOne')
-      .mockResolvedValue(mockResult);
+  it('test mark as favorite', () => {
+    const pokemon = new Pokemon();
+    pokemon.id = '001';
+    pokemon.name = 'Bulbasaur';
 
     const pokemonsRepositorySaveSpy = jest
     .spyOn(pokemonsRepository, 'save');
     
-    await service.updateFavorite('001', true);
-    expect(pokemonsRepositoryFindOneSpy).toBeCalledTimes(1);
+    service.updateFavorite(pokemon, true);
     expect(pokemonsRepositorySaveSpy).toBeCalledTimes(1);
+    expect(pokemonsRepositorySaveSpy).toHaveBeenCalledWith(pokemon);
   });
 });
