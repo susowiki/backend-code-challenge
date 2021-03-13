@@ -16,16 +16,14 @@ export class PokemonService {
 
     findAll(query: ListPokemonDto): Promise<Pokemon[]> {
         const whereStatement = {};
-        console.log(typeof query.offset); // always string, don't know why
-        console.log(typeof query.pageSize); // always string, don't know why
-        console.log(typeof query.favorite); // always string, don't know why
 
         if(query.type) whereStatement['types'] = query.type;
         if(query.name) whereStatement['name'] = query.name;
-        if(query.favorite != undefined) whereStatement['favorite'] = query.favorite;
+        if(query.favorite) whereStatement['favorite'] = query.favorite === 'true';
 
-        return this.pokemonsRepository.find({skip: query.offset ? query.offset : 0, 
-            take: query.pageSize ? query.pageSize : 1000, where: whereStatement });
+        return this.pokemonsRepository.find({skip: query.offset ? parseInt(query.offset) : 0, 
+                                             take: query.limit ? parseInt(query.limit) : 1000, 
+                                             where: whereStatement });
     }
 
     findById(id: string): Promise<Pokemon> {

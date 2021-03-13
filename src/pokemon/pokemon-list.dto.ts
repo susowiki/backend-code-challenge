@@ -1,18 +1,23 @@
-import { IsInt, IsString, IsBoolean } from 'class-validator';
+import { IsOptional, IsInt, IsString, IsBoolean, IsNumberString, IsBooleanString } from 'class-validator';
 
 export class ListPokemonDto {
-  @IsInt()
-  readonly offset: number;
+  @IsOptional()
+  @IsNumberString()
+  readonly offset: string;
 
-  @IsInt()
-  readonly pageSize: number;
+  @IsOptional()
+  @IsNumberString()
+  readonly limit: string;
 
+  @IsOptional()
   @IsString()
   readonly name: string;
 
+  @IsOptional()
   @IsString()
   readonly type: string;
 
-  @IsBoolean()
-  readonly favorite: boolean;
+  @IsOptional()
+  @IsBooleanString()
+  readonly favorite: string;
 }
