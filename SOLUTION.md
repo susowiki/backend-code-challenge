@@ -14,9 +14,9 @@ You must have installed:
 Steps to run this project:
 
 1. Run `npm i` command
-2. Run `docker-compose up` command
+2. Run `docker-compose up` command. To setup mongodb dockerized instance
 3. Run `npm run load-database` command
-4. Run `npm run start` command
+4. Run `npm run start` command. Server url: http://127.0.0.1:3000/
 5. Run `npm run test` command (TBD)
 6. Run `npm run test:e2e` command (TBD)
 
