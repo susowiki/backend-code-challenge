@@ -20,4 +20,12 @@ Steps to run this project:
 5. Run `npm run test` command (TBD)
 6. Run `npm run test:e2e` command (TBD)
 
+### API Endpoints
+
+* GET /pokemon: Retrieves a list of Pokemons with the given filter parameters (offset, limit, type, name, favorite)
+* GET /pokemon/id/{id}: Retrieves a Pokemon with the given id
+* GET /pokemon/name/{name}: Retrieves a Pokemon with the given name
+* GET /pokemon/types: Retrieves the list of Pokemon Types
+* PUT /pokemon/favorite/{id}: Marks a Pokemon as favorite
+* PUT /pokemon/unfavorite/{id}: Marks a Pokemon as not favorite
 
