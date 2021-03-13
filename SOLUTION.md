@@ -13,16 +13,21 @@ You must have installed:
 ### How to run
 Steps to run this project:
 
-1. Run `npm i` command
-2. Run `docker-compose up` command. To setup mongodb dockerized instance
-3. Run `npm run load-database` command
-4. Run `npm run start` command. Server url: http://127.0.0.1:3000/
-5. Run `npm run test` command (TBD)
-6. Run `npm run test:e2e` command (TBD)
+1. Run: ```npm i```
+2. To setup mongodb dockerized instance, run: ```docker-compose up```
+3. To load Pokemon list from json to mongodb, run: ```npm run load-database```
+4. To start server at: http://127.0.0.1:3000/, run: ```npm run start```
+5. To run unit tests, run (TBD): ```npm run test```
+6. To run end to end tests, run (TBD): ```npm run test:e2e```
 
 ### API Endpoints
 
-* GET /pokemon: Retrieves a list of Pokemons with the given filter parameters (offset, limit, type, name, favorite)
+* GET /pokemon: Retrieves a list of Pokemons with the given optional filter parameters: 
+    * offset: integer
+    * limit: integer
+    * type: string
+    * name: string
+    * favorite: boolean
 * GET /pokemon/id/{id}: Retrieves a Pokemon with the given id
 * GET /pokemon/name/{name}: Retrieves a Pokemon with the given name
 * GET /pokemon/types: Retrieves the list of Pokemon Types
