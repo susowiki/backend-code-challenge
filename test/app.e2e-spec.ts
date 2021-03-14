@@ -46,6 +46,28 @@ describe('PokemonController (e2e)', () => {
       }); 
   });
 
+  it('GET pokemons with pagination', () => {
+    return request(app.getHttpServer())
+      .get('/pokemon?offset=50')
+      .expect(200)
+      .expect((res) => {
+        const polemonList = JSON.parse(res.text);
+        expect(polemonList).toHaveLength(101);
+        expect(polemonList[0].id).toEqual('051');
+      }); 
+  });
+
+  it('GET pokemons with type', () => {
+    return request(app.getHttpServer())
+      .get('/pokemon?type=Water')
+      .expect(200)
+      .expect((res) => {
+        const polemonList = JSON.parse(res.text);
+        expect(polemonList).toHaveLength(32);
+        expect(polemonList[0].name).toEqual('Squirtle');
+      }); 
+  });
+
   it('GET pokemon by id', () => {
     return request(app.getHttpServer())
       .get('/pokemon/id/001')
