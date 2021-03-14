@@ -18,7 +18,7 @@ Steps to run this project:
 3. To load Pokemon list from json to mongodb, run: ```npm run load-database```
 4. To start server at: http://127.0.0.1:3000/, run: ```npm run start```
 5. To run unit tests, run: ```npm run test```
-6. To run end to end tests, run: ```npm run test:e2e``` NOTE: these tests relies in a fresh-loaded version of the Pokemon list in mongodb. Execute steps 2 and 3 to achieve so.
+6. To run end to end tests, run: ```npm run test:e2e```
 7. To check test coverage, run: ```npm run test:cov```
 
 ### API Endpoints
@@ -37,3 +37,9 @@ Steps to run this project:
 * PUT /pokemon/favorite/{id}: Marks a Pokemon as favorite
 * PUT /pokemon/unfavorite/{id}: Marks a Pokemon as not favorite
 
+### Technical clarifications
+* List endpoints return 404 when no content is found (normally if no data is present in the db)
+* GET /pokemon returns 400 when query params format is incorrect
+* End to end tests relies on a fresh-loaded database with the 151 pokemons. To properly run them, start up a new mongodb instance and run the data load script
+* I've splitted application logic in presentation (controller), business (service) and persistence (repository) layers
+* Even though Pokemon entity and Pokemon model are quite similar (only difference is internal _id from mongo), I wanted to keep them separated to hide database schema from api consumers, which improves security
