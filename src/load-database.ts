@@ -12,6 +12,7 @@ createConnection().then(async connection => {
         const thePokemon = new PokemonEntity();
         thePokemon.id = pokemon.id;
         thePokemon.name = pokemon.name;
+        thePokemon.classification = pokemon.classification;
         thePokemon.types = pokemon.types;
         thePokemon.resistant = pokemon.resistant;
         thePokemon.weaknesses = pokemon.weaknesses;

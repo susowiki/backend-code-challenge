@@ -12,7 +12,7 @@ export class PokemonController {
   @Get()
   async findAll(@Query() query: PokemonQuery): Promise<PokemonModel[]> {
     const result = await this.pokemonService.findAll(query);
-    if(result) {
+    if(result.length > 0) {
       return result.map(ent => PokemonAdapter.toApi(ent));
     } else {
       throw new NotFoundException();
@@ -42,7 +42,7 @@ export class PokemonController {
   @Get('types')
   async findAllTypes(): Promise<PokemonTypeModel[]> {
     const result = await this.pokemonService.findAllTypes();
-    if(result) {
+    if(result.length > 0) {
       return result.map(ent => PokemonAdapter.typeToApi(ent));
     } else {
       throw new NotFoundException();
