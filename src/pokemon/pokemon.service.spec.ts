@@ -6,7 +6,7 @@ import { PokemonTypeEntity } from './pokemon-type.entity';
 import { PokemonService } from './pokemon.service';
 import { PokemonsRepositoryFake } from './test/pokemon-fake.repository';
 import { PokemonTypesRepositoryFake } from './test/pokemon-type-fake.repository';
-import { PokemonQuery } from './pokemon-query';
+import { PokemonQueryApi } from './pokemon-query-api';
 
 describe('PokemonService', () => {
   let service: PokemonService;
@@ -47,7 +47,7 @@ describe('PokemonService', () => {
       .spyOn(pokemonsRepository, 'find')
       .mockResolvedValue(mockResult);
 
-    const query = new PokemonQuery();
+    const query = new PokemonQueryApi();
 
     service.findAll(query);
     expect(pokemonsRepositoryFindSpy).toBeCalledTimes(1);

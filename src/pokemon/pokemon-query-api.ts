@@ -2,7 +2,7 @@ import { IsOptional, IsString, IsNumberString, IsBooleanString, IsEnum } from 'c
 import { PokemonQueryOrder } from './pokemon-query-order.enum';
 import { PokemonQuerySort } from './pokemon-query-sort.enum';
 
-export class PokemonQuery {
+export class PokemonQueryApi {
   @IsOptional()
   @IsNumberString()
   readonly offset: string;

@@ -2,7 +2,7 @@ import { Controller, Get, Param, Put, Query, NotFoundException } from '@nestjs/c
 import { PokemonService } from './pokemon.service';
 import { PokemonModel } from './pokemon.model';
 import { PokemonTypeModel } from './pokemon-type.model';
-import { PokemonQuery } from './pokemon-query';
+import { PokemonQueryApi } from './pokemon-query-api';
 import { PokemonAdapter } from './pokemon.adapter';
 
 @Controller('pokemon')
@@ -10,7 +10,7 @@ export class PokemonController {
     constructor(private readonly pokemonService: PokemonService) {}
 
   @Get()
-  async findAll(@Query() query: PokemonQuery): Promise<PokemonModel[]> {
+  async findAll(@Query() query: PokemonQueryApi): Promise<PokemonModel[]> {
     const result = await this.pokemonService.findAll(query);
     if(result.length > 0) {
       return result.map(ent => PokemonAdapter.toApi(ent));

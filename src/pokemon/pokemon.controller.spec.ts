@@ -6,7 +6,7 @@ import { PokemonController } from './pokemon.controller';
 import { PokemonService } from './pokemon.service';
 import { PokemonsRepositoryFake } from './test/pokemon-fake.repository';
 import { PokemonTypesRepositoryFake } from './test/pokemon-type-fake.repository';
-import { PokemonQuery } from './pokemon-query';
+import { PokemonQueryApi } from './pokemon-query-api';
 import { NotFoundException } from '@nestjs/common';
 
 describe('PokemonController', () => {
@@ -39,7 +39,7 @@ describe('PokemonController', () => {
     const pokemonsServiceFindAllSpy = jest
       .spyOn(service, 'findAll')
       .mockResolvedValue([new PokemonEntity()]);
-    const query = new PokemonQuery();
+    const query = new PokemonQueryApi();
 
     controller.findAll(query);
     expect(pokemonsServiceFindAllSpy).toBeCalledTimes(1);
@@ -51,7 +51,7 @@ describe('PokemonController', () => {
       .spyOn(service, 'findAll')
       .mockResolvedValue([]);
 
-    await expect(controller.findAll(new PokemonQuery())).rejects.toThrow(NotFoundException);
+    await expect(controller.findAll(new PokemonQueryApi())).rejects.toThrow(NotFoundException);
     expect(pokemonsServiceFindAllSpy).toBeCalledTimes(1);
   });
 
