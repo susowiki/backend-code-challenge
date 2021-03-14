@@ -14,7 +14,7 @@ You must have installed:
 Steps to run this project:
 
 1. Run: ```npm i```
-2. To setup mongodb dockerized instance, run: ```docker-compose up```
+2. To setup mongodb dockerized instance, run: ```docker-compose up -d```
 3. To load Pokemon list from json to mongodb, run: ```npm run load-database```
 4. To start server at: http://127.0.0.1:3000/, run: ```npm run start```
 5. To run unit tests, run: ```npm run test```
