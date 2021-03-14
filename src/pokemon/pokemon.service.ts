@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { PokemonEntity } from './pokemon.entity';
 import { PokemonTypeEntity } from './pokemon-type.entity';
 import { PokemonQuery } from './pokemon-query';
+import { PokemonQuerySort } from './pokemon-query-sort.enum';
+import { PokemonQueryOrder } from './pokemon-query-order.enum';
 
 @Injectable()
 export class PokemonService {
@@ -16,13 +18,15 @@ export class PokemonService {
 
     findAll(query: PokemonQuery): Promise<PokemonEntity[]> {
         const whereStatement = {};
-
         if(query.type) whereStatement['types'] = query.type;
         if(query.name) whereStatement['name'] = query.name;
         if(query.favorite) whereStatement['favorite'] = query.favorite === 'true';
 
+        const orderStatement = {[query.sort ? query.sort : PokemonQuerySort[PokemonQuerySort.id]]: (query.order ? query.order : PokemonQueryOrder[PokemonQueryOrder.ASC] )};
+
         return this.pokemonsRepository.find({skip: query.offset ? parseInt(query.offset) : 0, 
                                              take: query.limit ? parseInt(query.limit) : 1000, 
+                                             order: orderStatement,
                                              where: whereStatement });
     }
 

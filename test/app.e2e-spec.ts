@@ -35,6 +35,17 @@ describe('PokemonController (e2e)', () => {
       .expect((res) => expect(JSON.parse(res.text)).toHaveLength(10)); 
   });
 
+  it('GET pokemons with sort param', () => {
+    return request(app.getHttpServer())
+      .get('/pokemon?sort=name')
+      .expect(200)
+      .expect((res) => {
+        const polemonList = JSON.parse(res.text);
+        expect(polemonList).toHaveLength(151);
+        expect(polemonList[0].name).toEqual('Abra');
+      }); 
+  });
+
   it('GET pokemon by id', () => {
     return request(app.getHttpServer())
       .get('/pokemon/id/001')

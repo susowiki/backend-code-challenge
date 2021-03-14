@@ -18,7 +18,7 @@ Steps to run this project:
 3. To load Pokemon list from json to mongodb, run: ```npm run load-database```
 4. To start server at: http://127.0.0.1:3000/, run: ```npm run start```
 5. To run unit tests, run: ```npm run test```
-6. To run end to end tests, run: ```npm run test:e2e```
+6. To run end to end tests, run: ```npm run test:e2e``` NOTE: these tests relies in a fresh-loaded version of the Pokemon list in mongodb. Execute steps 2 and 3 to achieve so.
 7. To check test coverage, run: ```npm run test:cov```
 
 ### API Endpoints
@@ -29,6 +29,8 @@ Steps to run this project:
     * type: string
     * name: string
     * favorite: boolean
+    * sort: string, possible values: id, name, classification, fleeRate, maxCP, maxHP, favorite. Default id
+    * order: string, possible values: ASC, DESC. Default ASC
 * GET /pokemon/id/{id}: Retrieves a Pokemon with the given id
 * GET /pokemon/name/{name}: Retrieves a Pokemon with the given name
 * GET /pokemon/types: Retrieves the list of Pokemon Types

@@ -51,7 +51,7 @@ describe('PokemonService', () => {
 
     service.findAll(query);
     expect(pokemonsRepositoryFindSpy).toBeCalledTimes(1);
-    expect(pokemonsRepositoryFindSpy).toBeCalledWith({"skip": 0, "take": 1000, "where": {}});   
+    expect(pokemonsRepositoryFindSpy).toBeCalledWith({"skip": 0, "take": 1000, order: {"id": "ASC"}, "where": {}});   
   });
 
   it('test find by id', () => {

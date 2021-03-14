@@ -47,7 +47,12 @@ describe('PokemonController', () => {
   });
 
   it('test find all - Not Found', async () => {
-    await expect(controller.findAll(new PokemonQuery())).rejects.toThrow(NotFoundException)
+    const pokemonsServiceFindAllSpy = jest
+      .spyOn(service, 'findAll')
+      .mockResolvedValue([]);
+
+    await expect(controller.findAll(new PokemonQuery())).rejects.toThrow(NotFoundException);
+    expect(pokemonsServiceFindAllSpy).toBeCalledTimes(1);
   });
 
   it('test find by id', () => {
@@ -88,7 +93,12 @@ describe('PokemonController', () => {
   });
 
   it('test find all types - Not Found', async () => {
+    const pokemonsServiceFindByNameSpy = jest
+      .spyOn(service, 'findAllTypes')
+      .mockResolvedValue([]);
+
     await expect(controller.findAllTypes()).rejects.toThrow(NotFoundException)
+    expect(pokemonsServiceFindByNameSpy).toBeCalledTimes(1);
   });
 
   it('test mark as favorite', async () => {
