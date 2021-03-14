@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Pokemon } from './pokemon.entity';
-import { PokemonType } from './pokemon-type.entity';
+import { PokemonEntity } from './pokemon.entity';
+import { PokemonTypeEntity } from './pokemon-type.entity';
 import { PokemonController } from './pokemon.controller';
 import { PokemonService } from './pokemon.service';
 import { PokemonsRepositoryFake } from './test/pokemon-fake.repository';
 import { PokemonTypesRepositoryFake } from './test/pokemon-type-fake.repository';
-import { ListPokemonDto } from './pokemon-list.dto';
+import { PokemonQuery } from './pokemon-query';
 import { NotFoundException } from '@nestjs/common';
 
 describe('PokemonController', () => {
@@ -18,11 +18,11 @@ describe('PokemonController', () => {
       controllers: [PokemonController],
       providers: [PokemonService, 
         {
-          provide: getRepositoryToken(Pokemon),
+          provide: getRepositoryToken(PokemonEntity),
           useClass: PokemonsRepositoryFake,
         },
         {
-          provide: getRepositoryToken(PokemonType),
+          provide: getRepositoryToken(PokemonTypeEntity),
           useClass: PokemonTypesRepositoryFake,
         },]
     }).compile();
@@ -38,8 +38,8 @@ describe('PokemonController', () => {
   it('test find all', () => {
     const pokemonsServiceFindAllSpy = jest
       .spyOn(service, 'findAll')
-      .mockResolvedValue([new Pokemon()]);
-    const query = new ListPokemonDto();
+      .mockResolvedValue([new PokemonEntity()]);
+    const query = new PokemonQuery();
 
     controller.findAll(query);
     expect(pokemonsServiceFindAllSpy).toBeCalledTimes(1);
@@ -47,13 +47,13 @@ describe('PokemonController', () => {
   });
 
   it('test find all - Not Found', async () => {
-    await expect(controller.findAll(new ListPokemonDto())).rejects.toThrow(NotFoundException)
+    await expect(controller.findAll(new PokemonQuery())).rejects.toThrow(NotFoundException)
   });
 
   it('test find by id', () => {
     const pokemonsServiceFindByIdSpy = jest
       .spyOn(service, 'findById')
-      .mockResolvedValue(new Pokemon());
+      .mockResolvedValue(new PokemonEntity());
 
     controller.findById('001');
     expect(pokemonsServiceFindByIdSpy).toBeCalledTimes(1);
@@ -67,7 +67,7 @@ describe('PokemonController', () => {
   it('test find by name', () => {
     const pokemonsServiceFindByNameSpy = jest
       .spyOn(service, 'findByName')
-      .mockResolvedValue(new Pokemon());
+      .mockResolvedValue(new PokemonEntity());
 
     controller.findByName('Bulbasaur');
     expect(pokemonsServiceFindByNameSpy).toBeCalledTimes(1);
@@ -81,7 +81,7 @@ describe('PokemonController', () => {
   it('test find all types', () => {
     const pokemonsServiceFindByNameSpy = jest
       .spyOn(service, 'findAllTypes')
-      .mockResolvedValue([new PokemonType()]);
+      .mockResolvedValue([new PokemonTypeEntity()]);
 
     controller.findAllTypes();
     expect(pokemonsServiceFindByNameSpy).toBeCalledTimes(1);
@@ -92,12 +92,13 @@ describe('PokemonController', () => {
   });
 
   it('test mark as favorite', async () => {
-    const pokemon = new Pokemon();
+    const pokemon = new PokemonEntity();
     const pokemonsServiceFindByIdSpy = jest
       .spyOn(service, 'findById')
       .mockResolvedValue(pokemon);
     const pokemonsServiceUpdateFavoriteSpy = jest
-      .spyOn(service, 'updateFavorite');
+      .spyOn(service, 'updateFavorite')
+      .mockResolvedValue(pokemon);
 
     await controller.markAsFavorite('001');
     expect(pokemonsServiceFindByIdSpy).toBeCalledTimes(1);
@@ -112,12 +113,13 @@ describe('PokemonController', () => {
   });
 
   it('test mark as not favorite', async () => {
-    const pokemon = new Pokemon();
+    const pokemon = new PokemonEntity();
     const pokemonsServiceFindByIdSpy = jest
       .spyOn(service, 'findById')
       .mockResolvedValue(pokemon);
     const pokemonsServiceUpdateFavoriteSpy = jest
-      .spyOn(service, 'updateFavorite');
+      .spyOn(service, 'updateFavorite')
+      .mockResolvedValue(pokemon);
 
     await controller.unmarkAsFavorite('001');
     expect(pokemonsServiceFindByIdSpy).toBeCalledTimes(1);

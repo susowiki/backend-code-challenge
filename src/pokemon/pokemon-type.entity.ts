@@ -1,7 +1,7 @@
 import {Entity, ObjectIdColumn, ObjectID, Column} from "typeorm";
 
 @Entity()
-export class PokemonType {
+export class PokemonTypeEntity {
 
     @ObjectIdColumn()
     _id: ObjectID;

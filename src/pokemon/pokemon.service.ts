@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Pokemon } from './pokemon.entity';
-import { PokemonType } from './pokemon-type.entity';
-import { ListPokemonDto } from './pokemon-list.dto';
+import { PokemonEntity } from './pokemon.entity';
+import { PokemonTypeEntity } from './pokemon-type.entity';
+import { PokemonQuery } from './pokemon-query';
 
 @Injectable()
 export class PokemonService {
     constructor(
-        @InjectRepository(Pokemon)
-        private pokemonsRepository: Repository<Pokemon>,
-        @InjectRepository(PokemonType)
-        private pokemonTypesRepository: Repository<PokemonType>,
+        @InjectRepository(PokemonEntity)
+        private pokemonsRepository: Repository<PokemonEntity>,
+        @InjectRepository(PokemonTypeEntity)
+        private pokemonTypesRepository: Repository<PokemonTypeEntity>,
       ) {}
 
-    findAll(query: ListPokemonDto): Promise<Pokemon[]> {
+    findAll(query: PokemonQuery): Promise<PokemonEntity[]> {
         const whereStatement = {};
 
         if(query.type) whereStatement['types'] = query.type;
@@ -26,19 +26,19 @@ export class PokemonService {
                                              where: whereStatement });
     }
 
-    findById(id: string): Promise<Pokemon> {
+    findById(id: string): Promise<PokemonEntity> {
         return this.pokemonsRepository.findOne({ where: { id: id } });
     }
 
-    findByName(name: string): Promise<Pokemon> {
+    findByName(name: string): Promise<PokemonEntity> {
         return this.pokemonsRepository.findOne({ where: { name: name } });
     }
 
-    findAllTypes(): Promise<PokemonType[]> {
+    findAllTypes(): Promise<PokemonTypeEntity[]> {
         return this.pokemonTypesRepository.find();
     }
 
-    updateFavorite(pokemon: Pokemon, isFavorite: boolean): Promise<Pokemon> {
+    updateFavorite(pokemon: PokemonEntity, isFavorite: boolean): Promise<PokemonEntity> {
         pokemon.favorite = isFavorite;
         return this.pokemonsRepository.save(pokemon);
     }

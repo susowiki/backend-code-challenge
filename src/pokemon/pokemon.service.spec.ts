@@ -1,35 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Pokemon } from './pokemon.entity';
-import { PokemonType } from './pokemon-type.entity';
+import { PokemonEntity } from './pokemon.entity';
+import { PokemonTypeEntity } from './pokemon-type.entity';
 import { PokemonService } from './pokemon.service';
 import { PokemonsRepositoryFake } from './test/pokemon-fake.repository';
 import { PokemonTypesRepositoryFake } from './test/pokemon-type-fake.repository';
-import { ListPokemonDto } from './pokemon-list.dto';
+import { PokemonQuery } from './pokemon-query';
 
 describe('PokemonService', () => {
   let service: PokemonService;
-  let pokemonsRepository: Repository<Pokemon>;
-  let pokemonTypesRepository: Repository<PokemonType>;
+  let pokemonsRepository: Repository<PokemonEntity>;
+  let pokemonTypesRepository: Repository<PokemonTypeEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PokemonService, 
         {
-          provide: getRepositoryToken(Pokemon),
+          provide: getRepositoryToken(PokemonEntity),
           useClass: PokemonsRepositoryFake,
         },
         {
-          provide: getRepositoryToken(PokemonType),
+          provide: getRepositoryToken(PokemonTypeEntity),
           useClass: PokemonTypesRepositoryFake,
         },
       ],
     }).compile();
 
     service = module.get<PokemonService>(PokemonService);
-    pokemonsRepository = module.get(getRepositoryToken(Pokemon));
-    pokemonTypesRepository = module.get(getRepositoryToken(PokemonType));
+    pokemonsRepository = module.get(getRepositoryToken(PokemonEntity));
+    pokemonTypesRepository = module.get(getRepositoryToken(PokemonTypeEntity));
   });
 
   it('should be defined', () => {
@@ -39,7 +39,7 @@ describe('PokemonService', () => {
   it('test find all with params', () => {
     const mockResult = [];
     ['Bulbasaur', 'Charmander', 'Squirtle'].forEach(name=> {
-      const mockPokemon = new Pokemon();
+      const mockPokemon = new PokemonEntity();
       mockPokemon.name = name;
       mockResult.push(mockPokemon);
     });
@@ -47,7 +47,7 @@ describe('PokemonService', () => {
       .spyOn(pokemonsRepository, 'find')
       .mockResolvedValue(mockResult);
 
-    const query = new ListPokemonDto();
+    const query = new PokemonQuery();
 
     service.findAll(query);
     expect(pokemonsRepositoryFindSpy).toBeCalledTimes(1);
@@ -55,7 +55,7 @@ describe('PokemonService', () => {
   });
 
   it('test find by id', () => {
-    const mockResult = new Pokemon();
+    const mockResult = new PokemonEntity();
     mockResult.id = '001';
     mockResult.name = 'Bulbasaur';
     const pokemonsRepositoryFindOneSpy = jest
@@ -68,7 +68,7 @@ describe('PokemonService', () => {
   });
 
   it('test find by name', () => {
-    const mockResult = new Pokemon();
+    const mockResult = new PokemonEntity();
     mockResult.id = '001';
     mockResult.name = 'Bulbasaur';
     const pokemonsRepositoryFindOneSpy = jest
@@ -83,7 +83,7 @@ describe('PokemonService', () => {
   it('test find all types', () => {
     const mockResult = [];
     ['Fire', 'Water'].forEach(typeName=> {
-      const mockType = new PokemonType();
+      const mockType = new PokemonTypeEntity();
       mockType.name = typeName;
       mockResult.push(mockType);
     });
@@ -96,7 +96,7 @@ describe('PokemonService', () => {
   });
 
   it('test mark as favorite', () => {
-    const pokemon = new Pokemon();
+    const pokemon = new PokemonEntity();
     pokemon.id = '001';
     pokemon.name = 'Bulbasaur';
 

@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { Pokemon } from './pokemon/pokemon.entity';
-import { PokemonType } from './pokemon/pokemon-type.entity';
+import { PokemonEntity } from './pokemon/pokemon.entity';
+import { PokemonTypeEntity } from './pokemon/pokemon-type.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +15,7 @@ import { PokemonType } from './pokemon/pokemon-type.entity';
     username: '',
     password: '',
     database: 'test',
-    entities: [Pokemon, PokemonType],
+    entities: [PokemonEntity, PokemonTypeEntity],
     synchronize: true,
   }), PokemonModule],
   controllers: [AppController],

@@ -1,6 +1,6 @@
 import { IsOptional, IsInt, IsString, IsBoolean, IsNumberString, IsBooleanString } from 'class-validator';
 
-export class ListPokemonDto {
+export class PokemonQuery {
   @IsOptional()
   @IsNumberString()
   readonly offset: string;

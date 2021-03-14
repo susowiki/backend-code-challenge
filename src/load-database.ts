@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import {Pokemon} from "./pokemon/pokemon.entity";
-import {PokemonType} from "./pokemon/pokemon-type.entity";
+import {PokemonEntity} from "./pokemon/pokemon.entity";
+import {PokemonTypeEntity} from "./pokemon/pokemon-type.entity";
 import * as pokemonsToLoad from '../pokemons.json'
 
 createConnection().then(async connection => {
@@ -9,7 +9,7 @@ createConnection().then(async connection => {
     console.log("Importing Pokemons from json file...");
 
     for(let pokemon of pokemonsToLoad){
-        const thePokemon = new Pokemon();
+        const thePokemon = new PokemonEntity();
         thePokemon.id = pokemon.id;
         thePokemon.name = pokemon.name;
         thePokemon.types = pokemon.types;
@@ -34,7 +34,7 @@ createConnection().then(async connection => {
         }
         
         for(let type of thePokemon.types){
-            const theType = new PokemonType();
+            const theType = new PokemonTypeEntity();
             theType.name = type;
 
             try {
@@ -49,14 +49,14 @@ createConnection().then(async connection => {
      }
 
     try {
-        const pokemonsFromDB = await connection.manager.find(Pokemon);
+        const pokemonsFromDB = await connection.manager.find(PokemonEntity);
         console.log(`Loaded ${pokemonsFromDB.length} pokemons`);
     } catch(e) {
         console.log("Error reading pokemons: ", e);
     }
 
     try {
-        const pokemonTypesFromDB = await connection.manager.find(PokemonType);
+        const pokemonTypesFromDB = await connection.manager.find(PokemonTypeEntity);
         console.log(`Loaded ${pokemonTypesFromDB.length} pokemon types`);
     } catch(e) {
         console.log("Error reading pokemon types: ", e);
