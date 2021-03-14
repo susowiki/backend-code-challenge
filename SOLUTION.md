@@ -19,6 +19,7 @@ Steps to run this project:
 4. To start server at: http://127.0.0.1:3000/, run: ```npm run start```
 5. To run unit tests, run: ```npm run test```
 6. To run end to end tests, run: ```npm run test:e2e```
+7. To check test coverage, run: ```npm run test:cov```
 
 ### API Endpoints
 
