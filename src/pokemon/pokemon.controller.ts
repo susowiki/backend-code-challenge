@@ -4,16 +4,20 @@ import { PokemonModel } from './pokemon.model';
 import { PokemonTypeModel } from './pokemon-type.model';
 import { PokemonQueryApi } from './pokemon-query-api';
 import { PokemonAdapter } from './pokemon.adapter';
+import { PokemonListApiDTO } from './pokemon-list-api.dto';
 
 @Controller('pokemon')
 export class PokemonController {
     constructor(private readonly pokemonService: PokemonService) {}
 
   @Get()
-  async findAll(@Query() query: PokemonQueryApi): Promise<PokemonModel[]> {
+  async findAll(@Query() query: PokemonQueryApi): Promise<PokemonListApiDTO> {
     const result = await this.pokemonService.findAll(query);
-    if(result.length > 0) {
-      return result.map(ent => PokemonAdapter.toApi(ent));
+    if(result.total > 0) {
+      const pokemonList = new PokemonListApiDTO();
+      pokemonList.items = result.items.map(ent => PokemonAdapter.toApi(ent));
+      pokemonList.total = result.total;
+      return pokemonList;
     } else {
       throw new NotFoundException();
     }

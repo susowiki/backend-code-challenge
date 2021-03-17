@@ -43,15 +43,15 @@ describe('PokemonService', () => {
       mockPokemon.name = name;
       mockResult.push(mockPokemon);
     });
-    const pokemonsRepositoryFindSpy = jest
-      .spyOn(pokemonsRepository, 'find')
-      .mockResolvedValue(mockResult);
+    const pokemonsRepositoryFindAndCountSpy = jest
+      .spyOn(pokemonsRepository, 'findAndCount')
+      .mockResolvedValue([mockResult, 3]);
 
     const query = new PokemonQueryApi();
 
     service.findAll(query);
-    expect(pokemonsRepositoryFindSpy).toBeCalledTimes(1);
-    expect(pokemonsRepositoryFindSpy).toBeCalledWith({"skip": 0, "take": 1000, order: {"id": "ASC"}, "where": {}});   
+    expect(pokemonsRepositoryFindAndCountSpy).toBeCalledTimes(1);
+    expect(pokemonsRepositoryFindAndCountSpy).toBeCalledWith({"skip": 0, "take": 1000, order: {"id": "ASC"}, "where": {}});   
   });
 
   it('test find by id', () => {

@@ -8,6 +8,7 @@ import { PokemonsRepositoryFake } from './test/pokemon-fake.repository';
 import { PokemonTypesRepositoryFake } from './test/pokemon-type-fake.repository';
 import { PokemonQueryApi } from './pokemon-query-api';
 import { NotFoundException } from '@nestjs/common';
+import { PokemonListEntityDTO } from './pokemon-list-entity.dto';
 
 describe('PokemonController', () => {
   let controller: PokemonController;
@@ -36,9 +37,12 @@ describe('PokemonController', () => {
   });
 
   it('test find all', () => {
+    const mockResult = new PokemonListEntityDTO();
+    mockResult.total = 1;
+    mockResult.items = [new PokemonEntity()];
     const pokemonsServiceFindAllSpy = jest
       .spyOn(service, 'findAll')
-      .mockResolvedValue([new PokemonEntity()]);
+      .mockResolvedValue(mockResult);
     const query = new PokemonQueryApi();
 
     controller.findAll(query);
@@ -47,9 +51,12 @@ describe('PokemonController', () => {
   });
 
   it('test find all - Not Found', async () => {
+    const mockResult = new PokemonListEntityDTO();
+    mockResult.total = 0;
+    mockResult.items = [];
     const pokemonsServiceFindAllSpy = jest
       .spyOn(service, 'findAll')
-      .mockResolvedValue([]);
+      .mockResolvedValue(mockResult);
 
     await expect(controller.findAll(new PokemonQueryApi())).rejects.toThrow(NotFoundException);
     expect(pokemonsServiceFindAllSpy).toBeCalledTimes(1);

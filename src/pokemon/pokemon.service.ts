@@ -7,6 +7,7 @@ import { PokemonQueryApi } from './pokemon-query-api';
 import { PokemonQuerySort } from './pokemon-query-sort.enum';
 import { PokemonQueryOrder } from './pokemon-query-order.enum';
 import { PokemonQueryMapper } from './pokemon-query.mapper';
+import { PokemonListEntityDTO } from './pokemon-list-entity.dto';
 
 @Injectable()
 export class PokemonService {
@@ -17,8 +18,12 @@ export class PokemonService {
         private pokemonTypesRepository: Repository<PokemonTypeEntity>,
       ) {}
 
-    findAll(query: PokemonQueryApi): Promise<PokemonEntity[]> {
-        return this.pokemonsRepository.find(PokemonQueryMapper.fromApiToDB(query));
+    async findAll(query: PokemonQueryApi): Promise<PokemonListEntityDTO> {
+        const [items, total] = await this.pokemonsRepository.findAndCount(PokemonQueryMapper.fromApiToDB(query))
+        const result = new PokemonListEntityDTO();
+        result.total = total;
+        result.items = items;
+        return result;
     }
 
     findById(id: string): Promise<PokemonEntity> {

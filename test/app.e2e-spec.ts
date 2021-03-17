@@ -25,14 +25,22 @@ describe('PokemonController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/pokemon')
       .expect(200)
-      .expect((res) => expect(JSON.parse(res.text)).toHaveLength(151));
+      .expect((res) => {
+        const responseBody = JSON.parse(res.text);
+        expect(responseBody.total).toEqual(151);
+        expect(responseBody.items).toHaveLength(151);
+      });
   });
 
   it('GET pokemons with limit param', () => {
     return request(app.getHttpServer())
       .get('/pokemon?limit=10')
       .expect(200)
-      .expect((res) => expect(JSON.parse(res.text)).toHaveLength(10)); 
+      .expect((res) => {
+        const responseBody = JSON.parse(res.text);
+        expect(responseBody.total).toEqual(151);
+        expect(responseBody.items).toHaveLength(10);
+      });
   });
 
   it('GET pokemons with sort param', () => {
@@ -41,8 +49,9 @@ describe('PokemonController (e2e)', () => {
       .expect(200)
       .expect((res) => {
         const polemonList = JSON.parse(res.text);
-        expect(polemonList).toHaveLength(151);
-        expect(polemonList[0].name).toEqual('Abra');
+        expect(polemonList.total).toEqual(151);
+        expect(polemonList.items).toHaveLength(151);
+        expect(polemonList.items[0].name).toEqual('Abra');
       }); 
   });
 
@@ -52,8 +61,9 @@ describe('PokemonController (e2e)', () => {
       .expect(200)
       .expect((res) => {
         const polemonList = JSON.parse(res.text);
-        expect(polemonList).toHaveLength(101);
-        expect(polemonList[0].id).toEqual('051');
+        expect(polemonList.total).toEqual(151);
+        expect(polemonList.items).toHaveLength(101);
+        expect(polemonList.items[0].id).toEqual('051');
       }); 
   });
 
@@ -63,8 +73,9 @@ describe('PokemonController (e2e)', () => {
       .expect(200)
       .expect((res) => {
         const polemonList = JSON.parse(res.text);
-        expect(polemonList).toHaveLength(32);
-        expect(polemonList[0].name).toEqual('Squirtle');
+        expect(polemonList.total).toEqual(32);
+        expect(polemonList.items).toHaveLength(32);
+        expect(polemonList.items[0].name).toEqual('Squirtle');
       }); 
   });
 

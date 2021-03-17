@@ -23,7 +23,7 @@ Steps to run this project:
 
 ### API Endpoints
 
-* GET /pokemon: Retrieves a list of Pokemons with the given optional filter parameters: 
+* GET /pokemon: Retrieves the total count and a list of Pokemons with the given optional filter parameters: 
     * offset: integer
     * limit: integer
     * type: string
